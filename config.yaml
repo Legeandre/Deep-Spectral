@@ -1,0 +1,17 @@
+experiment:
+  name: "Half_Harmonic_Oscillator_PINN"
+  seed: 42
+
+physics:
+  domain: [0.0, 6.0]
+
+model:
+  layers: [1, 64, 64, 64, 1]
+  n_points: 10000
+
+training:
+  n_states: 3 
+  initial_E0_guess: 0.0
+  delta_E_guess: 1.0
+  epochs_adam: 8000
+  epochs_lbfgs: 7000
