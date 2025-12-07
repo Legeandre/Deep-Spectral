@@ -1,6 +1,6 @@
 # Filename : results\simulations\PINN_Dynamics_PositionUncertainty.txt
 # Version  : PINN_Matrix_Solver_v2.3_Final
-# Start    : Sun Dec  7 14:46:24 2025
+# Start    : Sat Dec  6 00:33:51 2025
 # (1) time	(2) <x>	(3) <x>-dx	(4) <x>+dx
 # ================================================================================
 0.0000000000	2.3045207905	1.5999321524	3.0091094286

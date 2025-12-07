@@ -42,25 +42,23 @@ class SuperpositionManager:
             x_np, psi_np, psi_x_np = s.get_state_data()
 
             # --- GAUGE FIXING (Correção de Sinal) ---
+            # Para alinhar com a referência espectral do Oscilador Harmônico,
+            # forçamos a paridade do sinal inicial: (+, -, +, -, ...)
             max_abs = np.max(np.abs(psi_np))
+            # Pega o primeiro ponto que não é zero (acima de 5% do pico)
             sig_indices = np.where(np.abs(psi_np) > 0.05 * max_abs)[0]
             
             if len(sig_indices) > 0:
                 first_idx = sig_indices[0]
                 current_sign = np.sign(psi_np[first_idx])
                 
-                # --- CORREÇÃO DEFINITIVA ---
-                # O Oscilador Meio-Harmônico segue a paridade dos Polinômios de Hermite ímpares.
-                # n=0 (H1) -> Inclinação Positiva (+)
-                # n=1 (H3) -> Inclinação Negativa (-)
-                # n=2 (H5) -> Inclinação Positiva (+)
-                # Isso garante que o Momento comece SUBINDO (t>0).
+                # Regra: Par (n=0,2) -> Positivo | Ímpar (n=1,3) -> Negativo
                 target_sign = 1.0 if (n % 2 == 0) else -1.0
                 
                 if current_sign != target_sign:
                     psi_np = -psi_np
                     psi_x_np = -psi_x_np
-
+            
             psis.append(psi_np)
             psi_primes.append(psi_x_np)
 
@@ -89,7 +87,7 @@ class SuperpositionManager:
                 self.X2_matrix[n, m] = integrate(np.conj(psi_n) * (self.x_arr**2) * psi_m, self.x_arr)
                 
                 # Momento (-1j * integral da derivada)
-                self.P_matrix[n, m]  = 1j * integrate(np.conj(psi_n) * dpsi_m, self.x_arr)
+                self.P_matrix[n, m]  = -1j * integrate(np.conj(psi_n) * dpsi_m, self.x_arr)
                 self.P2_matrix[n, m] = integrate(np.conj(dpsi_n) * dpsi_m, self.x_arr)
 
         # 3) Hermitização (Limpeza de ruído imaginário na diagonal)

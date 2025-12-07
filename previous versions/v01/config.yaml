@@ -13,5 +13,5 @@ training:
   n_states: 3 
   initial_E0_guess: 0.0
   delta_E_guess: 1.0
-  epochs_adam: 7000
-  epochs_lbfgs: 6000
+  epochs_adam: 8000
+  epochs_lbfgs: 7000
